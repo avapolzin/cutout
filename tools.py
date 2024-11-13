@@ -27,11 +27,3 @@ def objloc(obj):
 			coords = SkyCoord(obj, unit = u.deg)
 
 	return coords
-
-
-
-def fromimg(obj, rgbimgs, size, rotation = None, wcsgrid = False, scalebar = False, savepath = None)
-	"""
-	Not sure if this is a good idea -- but will include it in tools for people to compare against quicklooks.
-
-	"""

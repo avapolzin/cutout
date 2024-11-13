@@ -11,24 +11,25 @@ No user choices, just plotting! These cutouts are intended to be used for a quic
 
 **`cutout` is intended to be as simple to use as possible.** The primary, and only necessary, input is an object's name or coordinates. 
 
-It is also possible to toggle rotation, whether a WCS grid and/or scalebar is shown, and where/whether to save an output image file. Defaults are no rotation, no WCS grid or scalenar, and the output is only shown not saved locally.
+It is also possible to toggle whether a WCS grid, scalebar, and/or object label is shown, and where/whether to save an output image file. Defaults are no WCS grid, scalebar, or object label, and the output is only shown, not saved locally.
 
 A few of examples:
 ```python
-import giles
+import cutout
 
-cutout.survey.decals('M79', rotation = None, wcsgrid = False, 
-	scalebar = False, savepath = 'm79cutout.png')
+cutout.survey.decals('M79', wcsgrid = False, scalebar = False, savepath = 'm79cutout.png', labelimg = True)
 
-cutout.survey.decals('05:24:10.59 -24:31:27.3', rotation = None, wcsgrid = False, 
-	scalebar = False, savepath = 'm79cutout.png')
+cutout.survey.decals('05:24:10.59 -24:31:27.3', wcsgrid = False, scalebar = False, 
+	savepath = 'm79cutout.png', labelimg = False)
 
 cutout.survey.hscssp('M79')
 ```
 
 All other choices, like cutout size/FOV, effective pixel scale, image scaling etc. are hardcoded and not user-facing. This is done to keep the code's use quick and painless.
 
-(If there is sufficient interest, I may add the ability to show multiple cutouts simultaneously. This increases the complexity of the user input, so to keep the top level functions as simple as possible, this feature is not included for now.)
+To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey.
+
+(If there is sufficient interest, I may add the ability to rotate cutouts freely and show multiple cutouts simultaneously. This increases the complexity of the user input, so to keep the top level functions as simple as possible, these features are not included for now.)
 
 ## Citation
 
