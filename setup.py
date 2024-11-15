@@ -5,7 +5,7 @@ setuptools.setup(
 	version = "0.1",
 	author = "Ava Polzin",
 	author_email = "apolzin@uchicago.edu",
-	description = "Cutouts from survey imaging.",
+	description = "Survey cutouts plotted directly; no user choices, just plotting!",
 	packages = ["cutout", "cutout/survey", "cutout/tools"],
 	url = "https://github.com/avapolzin/cutout",
 	license = 'MIT',

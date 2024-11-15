@@ -5,12 +5,14 @@ from cutout.tools import objloc
 from astropy.io import fits
 from astropy.wcs import WCS
 from unagi.task import hsc_cutout
+from unagi import hsc
 
 
 
 def decals(obj, wcsgrid = False, scalebar = False, labelimg = False, savepath = None, savefits = False):
 	"""
 	Return RGB DECaLS cutout from g, r, and z band imaging.
+	Pixel scale is 0.26"/pix.
 
 	Parameters:
 		obj (str): Name or coordinates for object of interest. If coordinates, should be in
@@ -75,7 +77,8 @@ def decals(obj, wcsgrid = False, scalebar = False, labelimg = False, savepath = 
 
 def hscssp(obj, wcsgrid = False, scalebar = False, savepath = None, savefits = False):
 	"""
-	Return RGB HSC SSP cutout.
+	Return RGB HSC SSP cutout from g, r, and i band imaging.
+	Pixel scale is 0.168"/pix.
 
 	Parameters:
 		obj (str): Name or coordinates for object of interest. If coordinates, should be in
@@ -92,35 +95,33 @@ def hscssp(obj, wcsgrid = False, scalebar = False, savepath = None, savefits = F
 
 	coords = objloc(obj)
 	fname = obj.replace(' ', '')+'.fits'
+
+	pdr2 = hsc.Hsc(dr='pdr2', rerun='any',config_file=None)
+
+	g = hsc_cutout(coords, cutout_size=256*0.168*u.arcsec, filters='g', archive=pdr2, save_output=savefits)
+	r = hsc_cutout(coords, cutout_size=256*0.168*u.arcsec, filters='r', archive=pdr2, save_output=savefits)
+	i = hsc_cutout(coords, cutout_size=256*0.168*u.arcsec, filters='i', archive=pdr2, save_output=savefits)
 	
-	## USING UNAGI
 
 	fig = plt.figure(figsize = (5, 5))
 
-	img = fits.open(fname)
-
-	g = img[0].data[0, :, :]
-	r = img[0].data[1, :, :]
-	i = img[0].data[2, :, :]
-
-	rgb = make_lupton_rgb(0.75*z, 1.1*r, 1.75*g, stretch=0.1, Q=5)
+	rgb = make_lupton_rgb(0.75*i[1].data, 1.*r[1].data, 1.5*g[1].data, stretch=0.3, Q=5)
 
 	if wcsgrid:
-		lswcs = WCS(img[0].header, img)
-		plt.subplot(projection=lswcs.slice(view = [1]))
+		hscwcs = WCS(g[1].header)
+		plt.subplot(projection=hscwcs)
 		plt.grid(color='gray', ls='dashed')
 		plt.xlabel('RA')
 		plt.ylabel('Dec')
 
 	plt.imshow(rgb, origin = 'lower', interpolation = 'none')
-	plt.gca().invert_xaxis()
 
 	if not wcsgrid:
 		plt.axis('off')
 
 	if scalebar:
-		x, y = g.shape
-		npix = scalebar/0.26 #arcsec
+		x, y = g[1].data.shape
+		npix = scalebar/0.168 #arcsec
 		plt.plot([512/2 - npix/2, 512/2 + npix/2], [512/8]*2, color = 'white')
 		plt.text(512/2 - 40, 512/8 + 5, s = '%i arcsec'%scalebar, color = 'white')
 
@@ -131,10 +132,6 @@ def hscssp(obj, wcsgrid = False, scalebar = False, savepath = None, savefits = F
 		fig.savefig(savepath, bbox_inches = 'tight', dpi = 200)
 
 	plt.show()
-
-
-	if not savefits:
-		os.system('rm '+fname)
 
 
 def panstarrs():

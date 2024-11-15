@@ -5,7 +5,21 @@ No user choices, just plotting! These cutouts are intended to be used for a quic
 
 ## Installation
 
+To install:
+```bash
+cd ~
 
+git clone https://github.com/avapolzin/cutout.git
+
+cd cutout
+
+sudo python3 setupy.py install
+
+````
+or 
+```bash
+pip install cutout
+```
 
 ## Getting Started
 
@@ -13,21 +27,22 @@ No user choices, just plotting! These cutouts are intended to be used for a quic
 
 It is also possible to toggle whether a WCS grid, scalebar, and/or object label is shown, and where/whether to save an output image file. Defaults are no WCS grid, scalebar, or object label, and the output is only shown, not saved locally.
 
-A few of examples:
+A few examples:
 ```python
 import cutout
 
-cutout.survey.decals('M79', wcsgrid = False, scalebar = False, savepath = 'm79cutout.png', labelimg = True)
+cutout.survey.decals('Leo P', wcsgrid = False, scalebar = False, savepath = 'leop_cutout.png', labelimg = True)
 
-cutout.survey.decals('05:24:10.59 -24:31:27.3', wcsgrid = False, scalebar = False, 
-	savepath = 'm79cutout.png', labelimg = False)
+cutout.survey.decals('10:21:45.12 +18:05:16.89', wcsgrid = False, scalebar = False, savepath = 'leop_cutout.png')
 
-cutout.survey.hscssp('M79')
+cutout.survey.hscssp('COSMOS-dw1')
+
+cutout.survey.panstarrs('NGC 4449')
 ```
 
 All other choices, like cutout size/FOV, effective pixel scale, image scaling etc. are hardcoded and not user-facing. This is done to keep the code's use quick and painless.
 
-To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey.
+Survey options to now are DECaLS (`decals`), HSC-SSP (`hscssp`), and Pan-STARRS (`panstarrs`). To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey. (For HSC-SSP, follow [these instructions](https://github.com/dr-guangtou/unagi/blob/master/demo/demo_hsc_config.ipynb) for data access, which requires an account.)
 
 (If there is sufficient interest, I may add the ability to rotate cutouts freely and show multiple cutouts simultaneously. This increases the complexity of the user input, so to keep the top level functions as simple as possible, these features are not included for now.)
 
