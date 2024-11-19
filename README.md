@@ -13,7 +13,7 @@ git clone https://github.com/avapolzin/cutout.git
 
 cd cutout
 
-sudo python3 setupy.py install
+sudo pip install .
 
 ````
 or 
