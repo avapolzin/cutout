@@ -1,4 +1,7 @@
 # `cutout`
+
+[![DOI](https://zenodo.org/badge/860602753.svg)](https://doi.org/10.5281/zenodo.14183586)
+
 Survey cutouts plotted directly. 
 
 No user choices, just plotting! These cutouts are intended to be used for a quick view, not analysis.
@@ -52,4 +55,4 @@ Note that HTTPS errors may occur if a survey's cutout server is down or unreacha
 
 ## Citation
 
-If you use this package or the scripts in this repository in a publication, please add a footnote linking to https://github.com/avapolzin/cutout and/or consider adding this software to your acknowledgments. If you would like to cite `cutout`, please use the Zenodo DOI linked [here]().
+If you use this package or the scripts in this repository in a publication, please add a footnote linking to https://github.com/avapolzin/cutout and/or consider adding this software to your acknowledgments. If you would like to cite `cutout`, please use the Zenodo DOI linked [here](https://zenodo.org/records/14183587).
