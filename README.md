@@ -31,18 +31,22 @@ A few examples:
 ```python
 import cutout
 
-cutout.survey.decals('Leo P', wcsgrid = False, scalebar = False, savepath = 'leop_cutout.png', labelimg = True)
+cutout.survey.decals('Leo P', wcsgrid = False, scalebar = False, 
+	savepath = 'leop_cutout.png', labelimg = True)
 
-cutout.survey.decals('10:21:45.12 +18:05:16.89', wcsgrid = False, scalebar = False, savepath = 'leop_cutout.png')
+cutout.survey.decals('10:21:45.12 +18:05:16.89', wcsgrid = False, scalebar = False, 
+	savepath = 'leop_cutout.png')
 
 cutout.survey.hscssp('COSMOS-dw1')
 
-cutout.survey.panstarrs('NGC 4449')
+cutout.survey.panstarrs('NGC 5486')
 ```
 
 All other choices, like cutout size/FOV, effective pixel scale, image scaling etc. are hardcoded and not user-facing. This is done to keep the code's use quick and painless.
 
-Survey options to now are DECaLS (`decals`), HSC-SSP (`hscssp`), and Pan-STARRS (`panstarrs`). To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey. (For HSC-SSP, follow [these instructions](https://github.com/dr-guangtou/unagi/blob/master/demo/demo_hsc_config.ipynb) for data access, which requires an account.)
+Survey options to now are DECaLS (`decals`), HSC-SSP (`hscssp`), and Pan-STARRS (`panstarrs`). To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey. (HSC-SSP data access requires an account, the credentials of which can be passed to the cutout server following [these instructions](https://github.com/dr-guangtou/unagi/blob/master/demo/demo_hsc_config.ipynb).)
+
+Note that HTTPS errors may occur if a survey's cutout server is down or unreachable for any reason.
 
 (If there is sufficient interest, I may add the ability to rotate cutouts freely and show multiple cutouts simultaneously. This increases the complexity of the user input, so to keep the top level functions as simple as possible, these features are not included for now.)
 
