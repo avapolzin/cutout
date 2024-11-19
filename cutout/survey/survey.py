@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 from astropy.visualization import make_lupton_rgb
+import astropy.units as u
 from cutout.tools import objloc, getpanstarrsurl
 from astropy.io import fits
 from astropy.wcs import WCS

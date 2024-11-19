@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name = "cutout",
-	version = "0.1",
+	version = "0.2",
 	author = "Ava Polzin",
 	author_email = "apolzin@uchicago.edu",
 	description = "Survey cutouts plotted directly; no user choices, just plotting!",
@@ -18,6 +18,8 @@ setuptools.setup(
 		"Topic :: Scientific/Engineering :: Astronomy",
 		"Topic :: Scientific/Engineering :: Physics"],
 	python_requires = ">=3",
-	install_requires = ["astropy", "matplotlib", "numpy", 
-		"unagi @ git+https://github.com/dr-guangtou/unagi"]
+	install_requires = ["astropy", "matplotlib", "numpy", "unagi"]
 )
+
+#more updated (development version of) unagi can be installed by replacing
+# "unagi" with "unagi @ git+https://github.com/dr-guangtou/unagi"
