@@ -1,5 +1,6 @@
 from astropy.coordinates import SkyCoord, name_resolve
 from astropy.table import Table
+import astropy.units as u
 import numpy as np
 
 def objloc(obj):

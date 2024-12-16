@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name = "cutout",
-	version = "0.2",
+	version = "0.3",
 	author = "Ava Polzin",
 	author_email = "apolzin@uchicago.edu",
 	description = "Survey cutouts plotted directly; no user choices, just plotting!",

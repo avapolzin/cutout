@@ -203,7 +203,7 @@ def panstarrs(obj, wcsgrid = False, scalebar = False, labelimg = False, savepath
 
 
 
-
+# add https://skymapper.anu.edu.au/how-to-access/?
 
 
 
