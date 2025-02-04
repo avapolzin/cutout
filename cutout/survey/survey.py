@@ -42,19 +42,6 @@ def decals(obj, wcsgrid = False, scalebar = False, labelimg = False, savepath = 
 	r = img[0].data[1, :, :]
 	z = img[0].data[2, :, :]
 
-	if np.min(z) == np.max(z): # check for z-band data
-		# redownload GRI data if z-band frame is empty
-		lspath = lspath.replace('&size=512', '&size=512&bands=gri')
-		os.system('curl -L '+lspath+' > "'+fname+'"')
-
-		img = fits.open(fname)
-
-		g = img[0].data[0, :, :]
-		r = img[0].data[1, :, :]
-		z = img[0].data[2, :, :]
-
-		print('No z-band data available, output image will be gri instead.')
-
 	rgb = make_lupton_rgb(0.75*z, 1.1*r, 1.75*g, stretch=0.1, Q=5)
 
 	if wcsgrid:
