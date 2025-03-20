@@ -2,11 +2,12 @@ import os
 import matplotlib.pyplot as plt
 from astropy.visualization import make_lupton_rgb
 import astropy.units as u
-from cutout.tools import objloc, getpanstarrsurl
+from cutout.tools import objloc, getpanstarrsurl, regrid
 from astropy.io import fits
 from astropy.wcs import WCS
 from unagi.task import hsc_cutout
 from unagi import hsc
+from astroquery.esa.euclid.core import EuclidClass
 
 
 
@@ -214,6 +215,77 @@ def panstarrs(obj, wcsgrid = False, scalebar = False, labelimg = False, savepath
 	plt.show()
 
 
+def euclid(obj, login, wcsgrid = False, scalebar = False, labelimg = False, savepath = None, savefits = False):
+	"""
+	Return RGB Euclid Q1 cutout from VIS and NIR imaging.
+	Pixel scale is ???"/pix.
+
+	Parameters:
+		obj (str): Name or coordinates for object of interest. If coordinates, should be in
+			HH:MM:SS DD:MM:SS or degree formats. Names must be resolvable in SIMBAD.
+		login (dict, kwargs): Dictionary of kwargs for login to Euclid data access. Either 
+			'user' (username) and 'password' OR 'credentials_file' (path to login credentials).
+			More specific login instructions and registration information are on the Euclid and
+			astroquery sites.
+		wcsgrid (bool): If True, show WCS grid on RGB image.
+		scalebar (float): Length of scalebar in arcseconds. If specified, shown on image.
+		labelimg (bool): If True, show obj string on image.
+		savepath (str): Path specifying where to save image. If not specified, image is not saved.
+		savefits (bool): If True, retain downloaded .fits file.
+
+	Returns:
+		If savepath, saves image to specified location. If savepath not specified, just displays image.
+	"""
+
+	Euclid = EuclidClass(environment='PDR')
+	Euclid.login(**login)
+
+
+	coords = objloc(obj)
+	fname = obj.replace(' ', '').replace(':','')
+
+	cone = Euclid.cone_search(coordinate = coords, radius = 0.5*u.deg, 
+			table_name="sedm.mosaic_product", ra_column_name="ra", 
+			dec_column_name="dec", columns="*", async_job=True).get_results()
+
+	g_ =  #VIS
+	i__ =  #NIR
+	i_ = regrid(i__, sample = 1/3) #regrid NISP observation to VIS resolution
+	r_ =  (g_ + i_)/2 #avg of VIS and NIR, unweighted for now
+
+
+	if savefits:
+		
+
+	fig = plt.figure(figsize = (5, 5))
+
+	rgb = make_lupton_rgb(0.5*i_[0].data, 0.65*r_[0].data, 1.*g_[0].data, stretch=500, Q=8)
+
+	if wcsgrid:
+		iwcs = WCS(g_[0].header, g_) #UPDATE THIS
+		plt.subplot(projection=iwcs)
+		plt.grid(color='gray', ls='dashed')
+		plt.xlabel('RA')
+		plt.ylabel('Dec')
+
+	plt.imshow(rgb, origin = 'lower', interpolation = 'none')
+
+	if not wcsgrid:
+		plt.axis('off')
+
+	if scalebar:
+		x, y = g_[0].data.shape
+		npix = scalebar/0.25 #arcsec ## UPDATE THIS
+		plt.plot([512/2 - npix/2, 512/2 + npix/2], [512/8]*2, color = 'white')
+		plt.text(512/2 - 40, 512/8 + 5, s = '%i arcsec'%scalebar, color = 'white')
+
+	if labelimg:
+		plt.text(10, 480, s = obj, color = 'white')
+
+	if savepath:
+		fig.savefig(savepath, bbox_inches = 'tight', dpi = 200)
+
+	plt.show()
 
 
 

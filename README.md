@@ -47,7 +47,9 @@ cutout.survey.panstarrs('NGC 5486')
 
 All other choices, like cutout size/FOV, effective pixel scale, image scaling etc. are hardcoded and not user-facing. This is done to keep the code's use quick and painless.
 
-Survey options to now are DECaLS (`decals`), HSC-SSP (`hscssp`), and Pan-STARRS (`panstarrs`). To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey. (HSC-SSP data access requires an account, the credentials of which can be passed to the cutout server following [these instructions](https://github.com/dr-guangtou/unagi/blob/master/demo/demo_hsc_config.ipynb).)
+Survey options to now are DECaLS (`decals`), HSC-SSP (`hscssp`), and Pan-STARRS (`panstarrs`). To request other surveys be added, please open an issue and link to the image retrieval instructions for that survey. 
+
+*Both HSC-SSP and Euclid data access requires an account/login. Credentials can be passed to the HSC cutout server following [these instructions](https://github.com/dr-guangtou/unagi/blob/master/demo/demo_hsc_config.ipynb), and Euclid credentials can be passed to `cutout.survey.euclid` directly via the login argument using either a username/password or a path to a credential config file-- more details are available [here](https://github.com/ESA-Datalabs/Euclid-Q1/blob/4af9177b73893bfc78e042b80ac332e0d183d83d/Notebooks/Astroquery.ipynb) and [here](https://www.cosmos.esa.int/web/euclid/q1-data).*
 
 Note that HTTPS errors may occur if a survey's cutout server is down or unreachable for any reason.
 

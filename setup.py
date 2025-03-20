@@ -5,7 +5,7 @@ pypi_descrip = (cutout_home / "README.md").read_text()
 
 setuptools.setup(
 	name = "cutout",
-	version = "0.3.1",
+	version = "0.4",
 	author = "Ava Polzin",
 	author_email = "apolzin@uchicago.edu",
 	description = "Survey cutouts plotted directly; no user choices, just plotting!",
@@ -21,7 +21,7 @@ setuptools.setup(
 		"Topic :: Scientific/Engineering :: Astronomy",
 		"Topic :: Scientific/Engineering :: Physics"],
 	python_requires = ">=3",
-	install_requires = ["astropy", "matplotlib", "numpy", "unagi"],
+	install_requires = ["astropy", "astroquery", "matplotlib", "numpy", "scipy", "unagi"],
 	long_description=pypi_descrip,
     long_description_content_type='text/markdown'
 )

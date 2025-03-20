@@ -1,1 +1,1 @@
-from .survey import decals, hscssp, panstarrs
+from .survey import decals, hscssp, panstarrs, euclid

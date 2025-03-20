@@ -2,6 +2,7 @@ from astropy.coordinates import SkyCoord, name_resolve
 from astropy.table import Table
 import astropy.units as u
 import numpy as np
+from scipy.interpolate import RectBivariateSpline
 
 def objloc(obj):
 	"""
@@ -88,3 +89,30 @@ def getpanstarrsurl(ra, dec, size=512, output_size=None, filters="gri", format="
 		for filename in table['filename']:
 			url.append(urlbase+filename)
 	return url
+
+
+def regrid (im, sample):
+	"""
+	Regrid image to different pixel scale.
+
+	Parameters:
+		im (arr): PSF image array.
+		sample (float): Npix,im/Npix,orig. If sample > 1, oversampled; if sample < 1, undersampled.
+			If im from Euclid/VIS, sample = 3; if im from Euclid/NISP, sample = 1/3.
+
+	Returns:
+		Interpolated and regridded PSF model.
+
+	"""
+
+	if sample == 1.:
+		return im
+
+	x,y = im.shape
+	xnew = np.arange(0, x, sample)
+	ynew = np.arange(0, y, sample)
+
+	spline = RectBivariateSpline(np.arange(x), np.arange(y), im)
+	out = spline(xnew[xnew <= x-1], ynew[ynew <= y-1])
+
+	return out	
